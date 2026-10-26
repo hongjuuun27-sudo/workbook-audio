@@ -1,6 +1,6 @@
 /* Installable PWA service worker. Network-first; offline falls back to cache.
    Vite hashes JS/CSS — do not hardcode asset filenames; cache responses as they are fetched. */
-const CACHE = 'reading-player-v1';
+const CACHE = 'reading-player-v2';
 const PRECACHE = [
   './',
   './index.html',
