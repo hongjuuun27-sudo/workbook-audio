@@ -1,0 +1,19 @@
+{
+  "name": "The Quiet Power of Boredom",
+  "short_name": "Boredom",
+  "description": "지루함 지문으로 하는 영어 읽기·듣기 연습",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3efe6",
+  "theme_color": "#f3efe6",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

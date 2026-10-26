@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f3efe6" />
+    <meta name="description" content="The Quiet Power of Boredom — 영어 읽기·듣기 연습" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Boredom" />
+    <title>The Quiet Power of Boredom · 읽기 연습</title>
+    <link rel="icon" href="/workbook-audio/reading-player/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/workbook-audio/reading-player/manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://hongjuuun27-sudo.github.io" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600&family=Noto+Sans+KR:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="/workbook-audio/reading-player/assets/index-ORSQI0pT.js"></script>
+    <link rel="stylesheet" crossorigin href="/workbook-audio/reading-player/assets/index-DWRr_-w5.css">
+  </head>
+  <body>
+    <div class="app">
+      <header class="masthead">
+        <div class="masthead-top">
+          <p class="kicker">읽기 연습</p>
+          <button type="button" class="settings" id="settings">설정</button>
+        </div>
+        <h1 id="title" lang="en">The Quiet Power of Boredom</h1>
+        <div class="tag-row">
+          <p class="level" id="level">B2–C1</p>
+          <p class="meta" id="meta"></p>
+        </div>
+        <p class="hint" id="hint"></p>
+      </header>
+
+      <div class="modes" id="modes" role="radiogroup" aria-label="듣기 단위">
+        <button type="button" role="radio" data-mode="full" aria-checked="true">전체</button>
+        <button type="button" role="radio" data-mode="paragraph" aria-checked="false">문단</button>
+        <button type="button" role="radio" data-mode="sentence" aria-checked="false">문장</button>
+      </div>
+      <p class="mode-hint" id="mode-hint"></p>
+      <div id="coach" class="coach"></div>
+
+      <main id="transcript" class="transcript" lang="en" aria-label="Transcript"></main>
+
+      <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+      <div id="error" class="error" role="alert" hidden>
+        <span id="error-text"></span>
+        <button type="button" id="error-retry">다시 시도</button>
+      </div>
+
+      <footer class="player" aria-label="재생 컨트롤">
+        <div
+          class="progress"
+          id="progress"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+          aria-label="재생 진행"
+        >
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="player-meta">
+          <span id="unit-label">문단 1 / 7</span>
+          <span class="times"><span id="time-now">0:00</span> / <span id="time-end">0:00</span></span>
+        </div>
+        <div class="controls">
+          <button type="button" class="ctrl" id="skip-back">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M11 7.2 5.2 12 11 16.8V7.2zm7 0L12.2 12 18 16.8V7.2z" />
+            </svg>
+            <span class="ctrl-main">뒤로</span>
+            <span class="ctrl-sub" id="skip-back-amount">5초</span>
+          </button>
+          <button type="button" class="play" id="play" aria-label="재생">
+            <span class="play-icon" id="play-icon"></span>
+          </button>
+          <button type="button" class="ctrl" id="skip-forward">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M6 7.2v9.6L11.8 12 6 7.2zm7 0v9.6L18.8 12 13 7.2z" />
+            </svg>
+            <span class="ctrl-main">앞으로</span>
+            <span class="ctrl-sub" id="skip-forward-amount">5초</span>
+          </button>
+          <button type="button" class="ctrl loop" id="loop" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 2l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"
+              />
+            </svg>
+            <span class="ctrl-main">반복</span>
+            <span class="ctrl-sub" id="loop-state">꺼짐</span>
+          </button>
+        </div>
+      </footer>
+    </div>
+
+    <dialog id="settings-dialog" aria-labelledby="settings-title">
+      <div class="sheet-grab" aria-hidden="true"></div>
+      <h2 id="settings-title">설정</h2>
+      <section class="sheet-section">
+        <h3>건너뛰기</h3>
+        <p class="sheet-lead">뒤로와 앞으로 버튼이 이동하는 시간입니다. 이 기기에 저장됩니다.</p>
+        <div class="skip-choices" role="radiogroup" aria-label="건너뛰기 간격">
+          <button type="button" role="radio" data-skip="5" id="skip-5">5초</button>
+          <button type="button" role="radio" data-skip="10" id="skip-10">10초</button>
+        </div>
+      </section>
+      <section class="sheet-section">
+        <h3>듣기 표시</h3>
+        <div class="switch-row">
+          <span class="switch-label" id="word-tap-label">단어 탭해서 듣기</span>
+          <button
+            type="button"
+            class="switch"
+            id="toggle-word-tap"
+            role="switch"
+            aria-checked="true"
+            aria-labelledby="word-tap-label"
+          ></button>
+        </div>
+        <div class="switch-row">
+          <span class="switch-label" id="word-follow-label">단어 따라가기</span>
+          <button
+            type="button"
+            class="switch"
+            id="toggle-word-follow"
+            role="switch"
+            aria-checked="true"
+            aria-labelledby="word-follow-label"
+          ></button>
+        </div>
+      </section>
+      <button type="button" class="sheet-close" id="close-settings">닫기</button>
+    </dialog>
+
+    <audio id="audio" preload="auto"></audio>
+    <noscript>이 연습 화면은 자바스크립트가 필요합니다.</noscript>
+  </body>
+</html>
